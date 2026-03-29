@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>vince-labs — AI Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Figtree:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Figtree',sans-serif;background:#fff;color:#1d1d1f;overflow-x:hidden;line-height:1}
+
+@keyframes drawPath{
+  0%{stroke-dashoffset:3000;opacity:0}
+  15%{opacity:1}
+  85%{opacity:.5}
+  100%{stroke-dashoffset:-3000;opacity:0}
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(28px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes floatY{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-7px)}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+.container{max-width:1080px;margin:0 auto;padding:0 28px}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  height:52px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;
+  transition:background .3s, backdrop-filter .3s, border-bottom .3s;
+}
+nav.scrolled{
+  background:rgba(255,255,255,.82);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(0,0,0,.08);
+}
+.nav-logo{font-size:17px;font-weight:900;letter-spacing:-.03em;cursor:pointer;color:#1d1d1f}
+.nav-links{display:flex;gap:2px}
+.nav-link{
+  font-size:13.5px;font-weight:500;color:#1d1d1f;
+  padding:6px 13px;border-radius:20px;cursor:pointer;
+  transition:background .15s;text-decoration:none;
+}
+.nav-link:hover{background:rgba(0,0,0,.06)}
+
+/* HERO */
+#home{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.paths-container{position:absolute;inset:0;overflow:hidden}
+.paths-container svg{width:100%;height:100%;position:absolute;inset:0}
+.hero-gradient{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 90% 70% at 50% 50%, rgba(255,255,255,0) 20%, rgba(255,255,255,.75) 100%);
+  pointer-events:none;
+}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 24px}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(0,0,0,.045);border:1px solid rgba(0,0,0,.08);
+  border-radius:980px;padding:7px 16px;margin-bottom:36px;
+  animation:fadeIn 1s .1s ease forwards;opacity:0;
+}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:#34c759;animation:pulse 2s infinite}
+.hero-badge span{font-size:13px;font-weight:500;color:#6e6e73}
+.hero-title{
+  font-size:clamp(72px,15vw,148px);
+  font-weight:900;letter-spacing:-.05em;line-height:.92;
+  color:#1d1d1f;margin-bottom:4px;
+}
+.hero-title-italic{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;font-weight:400;
+  color:#6e6e73;font-size:clamp(56px,12vw,118px);
+  display:block;letter-spacing:-.03em;
+}
+.hero-sub{
+  font-size:clamp(17px,2.2vw,22px);color:#6e6e73;
+  font-weight:400;max-width:480px;margin:28px auto 44px;
+  line-height:1.55;
+  animation:fadeUp .9s .5s ease forwards;opacity:0;
+}
+.hero-actions{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp .9s .7s ease forwards;opacity:0;
+}
+.btn-primary{
+  background:#1d1d1f;color:#fff;border:none;
+  border-radius:980px;padding:13px 30px;
+  font-family:'Figtree',sans-serif;font-size:15px;font-weight:600;
+  cursor:pointer;transition:background .2s,transform .15s;
+}
+.btn-primary:hover{background:#3a3a3c;transform:scale(1.02)}
+.btn-outline{
+  background:transparent;color:#1d1d1f;border:1.5px solid rgba(0,0,0,.2);
+  border-radius:980px;padding:13px 30px;
+  font-family:'Figtree',sans-serif;font-size:15px;font-weight:600;
+  cursor:pointer;transition:all .2s;
+}
+.btn-outline:hover{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.35)}
+.scroll-cue{
+  position:absolute;bottom:32px;left:50%;
+  transform:translateX(-50%);cursor:pointer;
+  animation:floatY 2.4s ease-in-out infinite;
+}
+
+/* ABOUT */
+#about{padding:110px 0;background:#f5f5f7}
+.section-eyebrow{
+  font-size:12px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:#6e6e73;margin-bottom:14px;
+}
+.section-h2{
+  font-size:clamp(30px,4.5vw,52px);font-weight:800;
+  letter-spacing:-.035em;line-height:1.08;
+  color:#1d1d1f;margin-bottom:20px;
+}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-text p{font-size:16.5px;color:#6e6e73;line-height:1.72;margin-bottom:18px;font-weight:400}
+.about-text p b{color:#1d1d1f}
+.stats{display:flex;gap:32px;margin-top:32px;flex-wrap:wrap}
+.stat-num{font-size:40px;font-weight:900;letter-spacing:-.04em;color:#1d1d1f;line-height:1}
+.stat-label{font-size:13px;color:#6e6e73;font-weight:500;margin-top:4px}
+.mini-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.mini-card{
+  background:#fff;border-radius:18px;padding:22px 20px;
+  border:1px solid rgba(0,0,0,.06);
+  transition:transform .25s,box-shadow .25s;
+}
+.mini-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.07)}
+.mini-card-icon{margin-bottom:12px;color:#1d1d1f}
+.mini-card h4{font-size:14.5px;font-weight:700;color:#1d1d1f;margin-bottom:5px;letter-spacing:-.01em}
+.mini-card p{font-size:12.5px;color:#6e6e73;line-height:1.5}
+
+/* SKILLS */
+#skills{padding:110px 0;background:#fff}
+.skills-header{margin-bottom:56px}
+.section-desc{font-size:17px;color:#6e6e73;max-width:500px;line-height:1.6;font-weight:400}
+.skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.skill-pill{
+  background:#f5f5f7;border-radius:16px;padding:22px 18px;
+  text-align:center;transition:transform .25s,background .2s;
+  cursor:default;
+}
+.skill-pill:hover{transform:translateY(-4px);background:#ebebee}
+.skill-pill-icon{margin-bottom:10px;display:flex;justify-content:center;align-items:center}
+.skill-pill-name{font-size:14.5px;font-weight:700;color:#1d1d1f;margin-bottom:6px;letter-spacing:-.01em}
+.skill-tag{
+  display:inline-block;background:#e8e8ed;color:#6e6e73;
+  font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:980px;
+}
+
+/* PROJECTS */
+#projects{padding:110px 0;background:#f5f5f7}
+.projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.proj-card{
+  background:#fff;border:1px solid rgba(0,0,0,.07);
+  border-radius:24px;padding:30px;
+  transition:transform .3s,box-shadow .3s;cursor:default;
+}
+.proj-card:hover{transform:translateY(-5px);box-shadow:0 24px 60px rgba(0,0,0,.09)}
+.proj-card.dark{background:#1d1d1f;border-color:transparent}
+.proj-card.dark:hover{box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.proj-icon{margin-bottom:18px}
+.proj-title{font-size:20px;font-weight:800;letter-spacing:-.03em;color:#1d1d1f;margin-bottom:10px}
+.proj-card.dark .proj-title{color:#fff}
+.proj-desc{font-size:14.5px;color:#6e6e73;line-height:1.65;margin-bottom:20px}
+.proj-card.dark .proj-desc{color:rgba(255,255,255,.55)}
+.proj-tags{display:flex;gap:8px;flex-wrap:wrap}
+.proj-tag{
+  background:#f5f5f7;color:#6e6e73;
+  font-size:12px;font-weight:600;padding:4px 12px;border-radius:980px;
+}
+.proj-card.dark .proj-tag{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7)}
+
+/* CONTACT */
+#contact{padding:120px 0;background:#fff;text-align:center}
+#contact .section-h2{margin:0 auto 20px}
+#contact .section-desc{margin:0 auto 52px;max-width:440px}
+.contact-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+footer{background:#f5f5f7;padding:32px;text-align:center;font-size:13.5px;color:#6e6e73;font-weight:500}
+
+@media(max-width:768px){
+  .about-grid{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:repeat(2,1fr)}
+  .projects-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-logo" onclick="scrollTo('home')">vince-labs</div>
+  <div class="nav-links">
+    <a class="nav-link" onclick="scrollTo('about')">About</a>
+    <a class="nav-link" onclick="scrollTo('skills')">Skills</a>
+    <a class="nav-link" onclick="scrollTo('projects')">Projects</a>
+    <a class="nav-link" onclick="scrollTo('contact')">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="paths-container">
+    <svg id="paths-svg" viewBox="0 0 696 316" fill="none" preserveAspectRatio="xMidYMid slice"></svg>
+  </div>
+  <div class="hero-gradient"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>AI Specialist · 15 years old</span>
+    </div>
+    <h1 class="hero-title" id="hero-title"></h1>
+    <p class="hero-sub">Building intelligent systems and exploring the frontier of artificial intelligence.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="scrollTo('projects')">View my work</button>
+      <button class="btn-outline" onclick="scrollTo('contact')">Get in touch</button>
+    </div>
+  </div>
+  <div class="scroll-cue" onclick="scrollTo('about')">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6e6e73" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-eyebrow">About me</p>
+        <h2 class="section-h2">Young.<br/>Driven.<br/>Obsessed with AI.</h2>
+        <p>I'm Vince, a <b>15-year-old AI specialist</b> passionate about building intelligent systems that solve real problems. I started exploring machine learning early and haven't stopped since.</p>
+        <p>Under the name <b>vince-labs</b>, I develop AI-powered projects, experiment with large language models, and push the limits of what's possible with modern AI tools.</p>
+        <div class="stats">
+          <div><div class="stat-num">2+</div><div class="stat-label">Years in AI</div></div>
+          <div><div class="stat-num">10+</div><div class="stat-label">Projects built</div></div>
+          <div><div class="stat-num">15</div><div class="stat-label">Years young</div></div>
+        </div>
+      </div>
+      <div class="mini-cards">
+        <div class="mini-card">
+          <div class="mini-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2a8 8 0 0 1 8 8v12l-4-4-2.5 2.5L11 18l-2.5 2.5L6 18l-4 4V10a8 8 0 0 1 8-8z"/></svg></div>
+          <h4>Machine Learning</h4>
+          <p>Neural networks, transformers & model training from scratch</p>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div>
+          <h4>LLMs & AI Agents</h4>
+          <p>Prompt engineering, autonomous agents & RAG pipelines</p>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <h4>Python & Dev</h4>
+          <p>Fast prototyping with modern tooling and frameworks</p>
+        </div>
+        <div class="mini-card">
+          <div class="mini-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+          <h4>AI Products</h4>
+          <p>End-to-end AI product development and deployment</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="skills-header">
+      <p class="section-eyebrow">Skills & tools</p>
+      <h2 class="section-h2">My tech stack</h2>
+      <p class="section-desc">The tools and technologies I use to build AI-powered products.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-pill">
+        <div class="skill-pill-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#3776AB" stroke-width="1.8" stroke-linecap="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="skill-pill-name">Python</div>
+        <span class="skill-tag">Advanced</span>
+      </div>
+      <div class="skill-pill">
+        <div class="skill-pill-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF6F00" stroke-width="1.8" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="skill-pill-name">TensorFlow</div>
+        <span class="skill-tag">Intermediate</span>
+      </div>
+      <div class="skill-pill">
+        <div class="skill-pill-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EE4C2C" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg></div>
+        <div class="skill-pill-name">PyTorch</div>
+        <span class="skill-tag">Intermediate</span>
+      </div>
+      <div class="skill-pill">
+        <div class="skill-pill-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#10a37f" stroke-width="1.8" stroke-linecap="round"><path d="M12 2a8 8 0 0 1 8 8v12l-4-4-2.5 2.5L11 18l-2.5 2.5L6 18l-4 4V10a8 8 0 0 1 8-8z"/></svg></div>
+        <div class="skill-pill-name">OpenAI API</div>
+        <span class="skill-tag">Advanced</span>
+      </div>
+      <div class="skill-pill">
+        <div class="skill-pill-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1C7F4E" stroke-width="1.8" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></div>
+        <div class="skill-pill-name">LangChain</div>
+        <span class="skill-tag">Intermediate</span>
+      </div>
+      <div class="skill-pill">
+        <div class="skill-pill-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#FF9D00" stroke-width="1.8" stroke-linecap="round"><path d="M12 2a8 8 0 0 1 8 8c0 5.25-8 14-8 14S4 15.25 4 10a8 8 0 0 1 8-8z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="skill-pill-name">Hugging Face</div>
+        <span class="skill-tag">Intermediate</span>
+      </div>
+      <div class="skill-pill">
+        <div class="skill-pill-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#F7931E" stroke-width="1.8" stroke-linecap="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg></div>
+        <div class="skill-pill-name">Scikit-learn</div>
+        <span class="skill-tag">Advanced</span>
+      </div>
+      <div class="skill-pill">
+        <div class="skill-pill-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#CC785C" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div>
+        <div class="skill-pill-name">Claude API</div>
+        <span class="skill-tag">Advanced</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div style="margin-bottom:56px">
+      <p class="section-eyebrow">Projects</p>
+      <h2 class="section-h2">Things I've built</h2>
+      <p class="section-desc">A selection of AI projects I've worked on.</p>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-card dark">
+        <div class="proj-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg></div>
+        <div class="proj-title">AI Chat Assistant</div>
+        <div class="proj-desc">A custom LLM-powered chatbot built with Python and the Claude API, featuring memory and context management for natural conversations.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Claude API</span>
+          <span class="proj-tag">LangChain</span>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <div class="proj-title">Image Classifier</div>
+        <div class="proj-desc">Deep learning model trained from scratch using PyTorch to classify images with high accuracy across multiple categories.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">PyTorch</span>
+          <span class="proj-tag">CNN</span>
+          <span class="proj-tag">Python</span>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round"><path d="M12 2a8 8 0 0 1 8 8v12l-4-4-2.5 2.5L11 18l-2.5 2.5L6 18l-4 4V10a8 8 0 0 1 8-8z"/></svg></div>
+        <div class="proj-title">Sentiment Analyzer</div>
+        <div class="proj-desc">NLP tool using transformer models to analyze sentiment in real time, with a clean interface for instant results on any text input.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Hugging Face</span>
+          <span class="proj-tag">NLP</span>
+          <span class="proj-tag">Transformers</span>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="proj-title">AI Agent Framework</div>
+        <div class="proj-desc">A lightweight autonomous agent framework built for experimenting with multi-step reasoning, tool use, and memory systems.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">OpenAI</span>
+          <span class="proj-tag">LangChain</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-eyebrow">Contact</p>
+    <h2 class="section-h2">Let's build<br/>something together.</h2>
+    <p class="section-desc">Have a project in mind, or just want to talk AI? I'm always open to new ideas and collaborations.</p>
+    <div class="contact-actions">
+      <button class="btn-primary" onclick="window.open('mailto:hello@vince-labs.dev')">
+        <span style="display:inline-flex;align-items:center;gap:8px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Send an email
+        </span>
+      </button>
+      <button class="btn-outline" onclick="window.open('https://github.com')">
+        <span style="display:inline-flex;align-items:center;gap:8px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.26-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85.004 1.71.115 2.51.337 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.38.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
+          GitHub
+        </span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 vince-labs — Built with curiosity.</p>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+window.scrollTo = function(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+};
+
+const heroTitle = document.getElementById('hero-title');
+const titleText = 'vince';
+const italicText = 'labs';
+
+titleText.split('').forEach((letter, i) => {
+  const span = document.createElement('span');
+  span.textContent = letter;
+  span.style.cssText = `display:inline-block;animation:fadeUp .6s ${i * 0.045}s ease forwards;opacity:0`;
+  heroTitle.appendChild(span);
+});
+
+const italic = document.createElement('span');
+italic.className = 'hero-title-italic';
+italicText.split('').forEach((letter, i) => {
+  const span = document.createElement('span');
+  span.textContent = letter;
+  span.style.cssText = `display:inline-block;animation:fadeUp .6s ${(i + titleText.length) * 0.045 + 0.1}s ease forwards;opacity:0`;
+  italic.appendChild(span);
+});
+heroTitle.appendChild(italic);
+
+const svg = document.getElementById('paths-svg');
+
+function genPaths(positionMult) {
+  for (let i = 0; i < 28; i++) {
+    const p = positionMult;
+    const d = `M-${380 - i*5*p} -${189 + i*6}C-${380 - i*5*p} -${189 + i*6} -${312 - i*5*p} ${216 - i*6} ${152 - i*5*p} ${343 - i*6}C${616 - i*5*p} ${470 - i*6} ${684 - i*5*p} ${875 - i*6} ${684 - i*5*p} ${875 - i*6}`;
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('stroke', '#1d1d1f');
+    path.setAttribute('stroke-width', (0.4 + i * 0.025).toString());
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('fill', 'none');
+    const dur = 18 + i * 0.7 + Math.random() * 4;
+    const delay = i * 0.6;
+    path.style.cssText = `stroke-dasharray:3000;stroke-dashoffset:3000;animation:drawPath ${dur}s ${delay}s linear infinite`;
+    svg.appendChild(path);
+  }
+}
+
+genPaths(1);
+genPaths(-1);
+</script>
+</body>
+</html>
